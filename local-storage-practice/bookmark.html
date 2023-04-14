@@ -1,33 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admitted</title>
-    <link rel="stylesheet" href="commonStyles.css" />
-  </head>
 
-  <body>
-    <div id="links">
-      <div><a href="index.html">Home</a></div>
-      <div><a href="applied.html">Applied Jobs</a></div>
-      <div><a href="bookmark.html">Bookmarks</a></div>
-    </div>
-    <main>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Job Applied</th>
-          </tr>
-        </thead>
-        <tbody id="body"></tbody>
-      </table>
-    </main>
-  </body>
-  <script>
-    //you need to code here
-  </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admitted</title>
+  <link rel="stylesheet" href="commonStyles.css" />
+</head>
+
+<body>
+  <div id="links">
+    <div><a href="index.html">Home</a></div>
+    <div><a href="applied.html">Applied Jobs</a></div>
+    <div><a href="bookmark.html">Bookmarks</a></div>
+  </div>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Job Applied</th>
+          <th>Delete</th>
+
+        </tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+  </main>
+</body>
+<script>
+  //you need to code here
+
+  let bookmarkArray = JSON.parse(localStorage.getItem("bookmarkList")) || []
+
+
+  displayTable();
+
+  function displayTable() {
+
+    let container = document.getElementById("body")
+    container.innerHTML = ""
+
+    bookmarkArray.forEach((el, index) => {
+
+      let tr = document.createElement("tr");
+
+      let td1 = document.createElement("td");
+      td1.innerHTML = el.name
+
+      let td2 = document.createElement("td");
+      td2.innerHTML = el.email
+
+      let td3 = document.createElement("td");
+      td3.innerHTML = el.role
+
+
+      let td4 = document.createElement("td");
+      td4.innerHTML = "Delete";
+      td4.style.backgroundColor = "teal";
+      td4.style.color = "white"
+
+      td4.addEventListener("click", function () {
+        deletEl(el, index)
+      })
+
+      tr.append(td1, td2, td3, td4);
+      container.append(tr)
+
+    });
+  };
+
+
+  function deletEl(el, index) {
+    bookmarkArray.splice(index, 1)
+    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkArray))
+    displayTable()
+  }
+
+
+</script>
+
 </html>
